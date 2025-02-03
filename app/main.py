@@ -14,6 +14,8 @@ class CarWashStation:
 
     def __init__(self, distance_from_city_center: float, clean_power: int,
                  average_rating: float, count_of_ratings: int) -> None:
+        if distance_from_city_center == 0:
+            return
         self.distance_from_city_center = distance_from_city_center
         self.clean_power = clean_power
         self.average_rating = round(average_rating, 1)
