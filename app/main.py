@@ -38,7 +38,7 @@ class CarWashStation:
             car.clean_mark = self.clean_power
 
     def rate_service(self, rating: int) -> None:
-        if not 1 <= rating <=5:
+        if not 1 <= rating <= 5:
             return
         total_rating = self.average_rating * self.count_of_ratings + rating
         self.count_of_ratings += 1
