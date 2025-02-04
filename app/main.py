@@ -15,18 +15,17 @@ class CarWashStation:
     def __init__(self, distance_from_city_center: float, clean_power: int,
                  average_rating: float, count_of_ratings: int) -> None:
         if distance_from_city_center == 0:
-            return
+            raise ValueError("Distance from city center cannot be zero")
         self.distance_from_city_center = distance_from_city_center
         self.clean_power = clean_power
         self.average_rating = round(average_rating, 1)
         self.count_of_ratings = count_of_ratings
 
     def serve_cars(self, cars: List[Car]) -> float:
-        income = 0
-        for car in cars:
-            if car.clean_mark < self.clean_power:
-                income += self.calculate_washing_price(car)
-                self.wash_single_car(car)
+        washable_cars = [car for car in Cars if car.clean_mark < self.clean_power]
+        income =  sum(self.calculate_washing_price(car) for car in washable_cars)
+        for car in washable_cars:
+            self.wash_single_car((car))
         return round(income, 1)
 
     def calculate_washing_price(self, car: Car) -> float:
@@ -39,7 +38,7 @@ class CarWashStation:
 
     def rate_service(self, rating: int) -> None:
         if not 1 <= rating <= 5:
-            return
+            raise ValueError("Rating must be between 1 and 5")
         total_rating = self.average_rating * self.count_of_ratings + rating
         self.count_of_ratings += 1
 
